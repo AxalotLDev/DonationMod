@@ -9,26 +9,27 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.registry.entry.RegistryEntry;
 
-import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 public class EffectEvent extends Event {
     private final Random random = new Random();
-    private static final StatusEffect[] EFFECTS = {
+    private static final List<RegistryEntry<StatusEffect>> EFFECTS = new ArrayList<>(List.of(
             StatusEffects.NAUSEA,
             StatusEffects.BLINDNESS,
             StatusEffects.DARKNESS,
             StatusEffects.MINING_FATIGUE
-    };
+    ));
+
     public EffectEvent(String name, int duration) {
         super(name, duration);
     }
+
     @Override
     public void execute(DonationAlertsEvent donationAlertsEvent) {
         ModConfig config = DonationMod.getConfig();
-        StatusEffect effect = getRandomEffect();
+        RegistryEntry<StatusEffect> effect = getRandomEffect();
         int amount = (int) donationAlertsEvent.Amount;
         if (MinecraftClient.getInstance().player == null) {
             DonationEvent.activeEvents.removeIf(event -> event instanceof EffectEvent);
@@ -41,13 +42,13 @@ public class EffectEvent extends Event {
         } else if (amount >= config.getFirstEffectDonationAmount()) {
             setDuration(config.getFirstEffectDuration());
         }
-        if(effect.equals(StatusEffects.MINING_FATIGUE)){
+        if (effect.equals(StatusEffects.MINING_FATIGUE)) {
             DonationEvent.addEventEffect(effect, getDuration(), 3);
         } else {
             DonationEvent.addEventEffect(effect, getDuration(), 0);
         }
         Timer timer = new Timer();
-        DonationEvent.addDonationText(I18n.translate(effect.getTranslationKey()), null);
+        DonationEvent.addDonationText(I18n.translate(effect.value().getTranslationKey()), null);
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -56,7 +57,8 @@ public class EffectEvent extends Event {
             }
         }, getDuration() * 1000L);
     }
-    private StatusEffect getRandomEffect(){
-        return EFFECTS[random.nextInt(EFFECTS.length)];
+
+    private RegistryEntry<StatusEffect> getRandomEffect() {
+        return EFFECTS.get(random.nextInt(EFFECTS.size()));
     }
 }

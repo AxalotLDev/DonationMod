@@ -7,7 +7,6 @@ import com.axalotl.donationmod.events.Event;
 import com.axalotl.donationmod.events.Values;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.resource.language.I18n;
-import net.minecraft.entity.effect.StatusEffect;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -25,8 +24,7 @@ public class CancelDamage extends Event {
         }
         Values.cancelDamage = true;
         DonationEvent.addDonationText(null, I18n.translate( "effect.donation_mod.cancel_damage"));
-        StatusEffect effect = EventEffects.CANCEL_DAMAGE;
-        DonationEvent.addEventEffect(effect,getDuration(), 0);
+        DonationEvent.addEventEffect(EventEffects.CANCEL_DAMAGE,getDuration(), 0);
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override

@@ -3,6 +3,7 @@ package com.axalotl.donationmod.effects;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
+import net.minecraft.server.world.ServerWorld;
 
 public class DonationEffect extends StatusEffect {
     public DonationEffect(StatusEffectCategory statusEffectCategory, int color) {
@@ -10,8 +11,8 @@ public class DonationEffect extends StatusEffect {
     }
 
     @Override
-    public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-        super.applyUpdateEffect(entity, amplifier);
+    public boolean applyUpdateEffect(ServerWorld world, LivingEntity entity, int amplifier) {
+        return super.applyUpdateEffect(world, entity, amplifier);
     }
 
     @Override

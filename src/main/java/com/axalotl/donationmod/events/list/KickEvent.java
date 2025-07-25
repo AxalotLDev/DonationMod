@@ -6,7 +6,6 @@ import com.axalotl.donationmod.events.DonationEvent;
 import com.axalotl.donationmod.events.Event;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.resource.language.I18n;
-import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.text.Text;
 
 import java.util.Objects;
@@ -25,8 +24,7 @@ public class KickEvent extends Event {
             return;
         }
         DonationEvent.addDonationText(null, I18n.translate("effect.donation_mod.kick"));
-        StatusEffect effect = EventEffects.KICK;
-        DonationEvent.addEventEffect(effect, 999999, 0);
+        DonationEvent.addEventEffect(EventEffects.KICK, -1, 0);
         Timer taskTimer = new Timer();
         taskTimer.schedule(new TimerTask() {
             @Override

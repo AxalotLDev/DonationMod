@@ -4,6 +4,7 @@
   "version": "${version}",
   "name": "DonationMod",
   "description": "Donation events in Minecraft",
+  "refmap": "DonationMod-refmap.json",
   "authors": [
     "_Axa_lotL_"
   ],
@@ -15,19 +16,25 @@
   "license": "MIT",
   "icon": "assets/donation_mod/donationmod.png",
   "environment": "client",
+  "accessWidener": "donationmod.accesswidener",
   "entrypoints": {
     "main": [
       "com.axalotl.donationmod.DonationMod"
     ],
-    "modmenu": [ "com.axalotl.donationmod.config.ModMenuApiImpl" ]
+    "modmenu": [
+      "com.axalotl.donationmod.config.ModMenuApiImpl"
+    ],
+    "mixinsquared": [
+      "com.axalotl.donationmod.mixins.ModMixinCanceller"
+    ]
   },
   "mixins": [
     "DonationMod.mixins.json"
   ],
   "depends": {
-    "minecraft": ">=1.20",
-    "fabricloader": ">=0.14.0",
-    "fabric-api": ">=0.83.0",
-    "cloth-config": ">=11.0.0"
+    "minecraft": ">=1.21.4",
+    "fabricloader": "*",
+    "fabric-api": "*",
+    "cloth-config": "*"
   }
 }

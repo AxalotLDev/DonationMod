@@ -7,8 +7,9 @@ import net.minecraft.util.Identifier;
 
 public class EventSounds {
     public static SoundEvent SCARY_SOUND;
+
     private static SoundEvent registerEvent() {
-        Identifier id = new Identifier("donation_mod", "scary_sound");
+        Identifier id = Identifier.of("donation_mod", "scary_sound");
         return Registry.register(Registries.SOUND_EVENT, id, SoundEvent.of(id));
     }
 

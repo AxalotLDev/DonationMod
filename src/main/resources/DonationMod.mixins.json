@@ -4,14 +4,13 @@
   "package": "com.axalotl.donationmod.mixins",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "PlayerEntityMixin",
-    "EntityRendererMixin",
     "CameraAccessor",
+    "ElytraItemMixin",
+    "EntityRendererMixin",
     "GameRendererMixin",
     "KeyboardInputMixin",
-    "StatusEffectUtilMixin",
-    "ElytraItemMixin",
-    "PerspectiveMixin"
+    "PerspectiveMixin",
+    "PlayerEntityMixin"
   ],
   "client": [
   ],

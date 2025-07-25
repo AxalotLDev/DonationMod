@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.1-SNAPSHOT'
+    id 'fabric-loom' version '1.11-SNAPSHOT'
     id 'maven-publish'
 }
 
@@ -9,7 +9,10 @@ group = project.maven_group
 configurations {
     extraLibs
 }
-
+loom {
+    def aw = file("src/main/resources/donationmod.accesswidener")
+    accessWidenerPath.set(aw)
+}
 sourceSets {
     main {
         compileClasspath += configurations.extraLibs
@@ -27,12 +30,14 @@ repositories {
         name = 'ModMenu'
         url = 'https://maven.terraformersmc.com/releases/'
     }
+    maven { url = 'https://maven.bawnorton.com/releases' }
     mavenCentral()
 }
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    modImplementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:0.3.3"))
 
     // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"

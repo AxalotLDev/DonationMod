@@ -7,7 +7,6 @@ import com.axalotl.donationmod.events.Event;
 import com.axalotl.donationmod.events.Values;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.resource.language.I18n;
-import net.minecraft.entity.effect.StatusEffect;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -28,8 +27,7 @@ public class CinematicCameraEvent extends Event {
         Values.forceFov = true;
         Values.fov = 60;
         DonationEvent.addDonationText(null, I18n.translate("effect.donation_mod.cinematic_camera"));
-        StatusEffect effect = EventEffects.CINEMATIC_CAMERA;
-        DonationEvent.addEventEffect(effect,getDuration(), 0);
+        DonationEvent.addEventEffect(EventEffects.CINEMATIC_CAMERA,getDuration(), 0);
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override

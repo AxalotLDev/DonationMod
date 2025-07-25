@@ -1,6 +1,5 @@
 package com.axalotl.donationmod.events.list;
 
-import com.axalotl.donationmod.DonationMod;
 import com.axalotl.donationmod.donationalerts.DonationAlertsEvent;
 import com.axalotl.donationmod.effects.EventEffects;
 import com.axalotl.donationmod.events.DonationEvent;
@@ -8,7 +7,6 @@ import com.axalotl.donationmod.events.Event;
 import com.axalotl.donationmod.events.Values;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.resource.language.I18n;
-import net.minecraft.entity.effect.StatusEffect;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -26,8 +24,7 @@ public class NoFriendsEvent extends Event {
         }
         Values.noFriends = true;
         DonationEvent.addDonationText(null, I18n.translate("effect.donation_mod.no_friends"));
-        StatusEffect effect = EventEffects.NO_FRIENDS;
-        DonationEvent.addEventEffect(effect,getDuration(), 0);
+        DonationEvent.addEventEffect(EventEffects.NO_FRIENDS,getDuration(), 0);
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override

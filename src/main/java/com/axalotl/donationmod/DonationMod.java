@@ -28,7 +28,6 @@ import java.net.URISyntaxException;
 public class DonationMod implements ModInitializer {
     private static ConfigHolder<ModConfig> configHolder;
     public static DonationAlerts da;
-    public static final String DASERVER = "https://socket.donationalerts.ru:443";
 
     @Override
     public void onInitialize() {
@@ -36,6 +35,7 @@ public class DonationMod implements ModInitializer {
         KeyHandler.registerBindings();
         Commands.registerCommands();
         try {
+            String DASERVER = "https://socket.donationalerts.ru:443";
             da = new DonationAlerts(DASERVER);
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
@@ -53,6 +53,7 @@ public class DonationMod implements ModInitializer {
 
     public static void AddDonation(DonationAlertsEvent event) {
         if (event.Type == AlertType.Donate) {
+            System.out.println("work");
             DonationEvent.launchRandomEvent(event);
         }
     }

@@ -1,0 +1,3 @@
+accessWidener   v1  named
+accessible field net/minecraft/network/ClientConnection disconnectionInfo Lnet/minecraft/network/DisconnectionInfo;
+accessible field net/minecraft/entity/LivingEntity activeStatusEffects Ljava/util/Map;

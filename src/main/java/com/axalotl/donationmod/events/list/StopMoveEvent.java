@@ -7,7 +7,6 @@ import com.axalotl.donationmod.events.Event;
 import com.axalotl.donationmod.events.Values;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.resource.language.I18n;
-import net.minecraft.entity.effect.StatusEffect;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -23,8 +22,7 @@ public class StopMoveEvent extends Event {
             DonationEvent.activeEvents.removeIf(event -> event instanceof StopMoveEvent);
             return;
         }
-        StatusEffect effect = EventEffects.STOP_MOVE;
-        DonationEvent.addEventEffect(effect, getDuration(), 0);
+        DonationEvent.addEventEffect(EventEffects.STOP_MOVE, getDuration(), 0);
         DonationEvent.addDonationText(null, I18n.translate( "effect.donation_mod.stop_move"));
         Values.disableEnderPearls = true;
         Values.disableBlockBreak = true;

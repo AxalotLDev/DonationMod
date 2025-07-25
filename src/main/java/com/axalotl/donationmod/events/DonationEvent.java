@@ -9,6 +9,7 @@ import net.minecraft.client.resource.language.I18n;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
@@ -53,6 +54,7 @@ public class DonationEvent {
         }
         return null;
     }
+
     public static void launchRandomEvent(DonationAlertsEvent donationAlertsEvent) {
         int amount = (int) donationAlertsEvent.AmountMain;
         int VeryBigDonations = amount / config.getVeryBigDonationAmount();
@@ -70,7 +72,7 @@ public class DonationEvent {
         EventRandomizer big_random = new EventRandomizer(bigDonations);
         EventRandomizer very_big_random = new EventRandomizer(veryBigDonationEvents);
         EventRandomizer small_random = new EventRandomizer(smallDonationEvents);
-        if(amount > config.getVeryBigDonationAmount() && config.isEnabledCasino()){
+        if (amount > config.getVeryBigDonationAmount() && config.isEnabledCasino()) {
             testEvents[0].execute(donationAlertsEvent);
         }
         while (SmallDonations > 0) {
@@ -86,7 +88,7 @@ public class DonationEvent {
             VeryBigDonations--;
         }
         eventsQueue.forEach(event -> {
-            if(!(event instanceof KickEvent)){
+            if (!(event instanceof KickEvent)) {
                 activeEvents.add(event);
             }
         });
@@ -99,7 +101,7 @@ public class DonationEvent {
                 .findFirst()
                 .ifPresent(run -> {
                     Event new_event = big_random.getRandomEvent();
-                    while (new_event instanceof SlowdownEvent){
+                    while (new_event instanceof SlowdownEvent) {
                         new_event = big_random.getRandomEvent();
                     }
                     activeEvents.add(new_event);
@@ -111,7 +113,7 @@ public class DonationEvent {
             public void run() {
                 if (player != null) {
                     if (!eventsQueue.isEmpty()) {
-                        if(!Values.casinoActive){
+                        if (!Values.casinoActive) {
                             Event event = eventsQueue.remove(0);
                             event.execute(donationAlertsEvent);
                         }
@@ -132,9 +134,10 @@ public class DonationEvent {
         Timer myTimer = new Timer();
         myTimer.schedule(new TimerTask() {
             int count = 0;
+
             @Override
             public void run() {
-                if(client.player != null){
+                if (client.player != null) {
                     if (effectName != null && eventName == null) {
                         Objects.requireNonNull(player).sendMessage(Text.of(I18n.translate("text.donation_mod.message.donation_effect") + " " + effectName), true);
                     } else if (effectName == null && eventName != null) {
@@ -149,10 +152,11 @@ public class DonationEvent {
         }, 100, 900);
     }
 
-    public static void addEventEffect(StatusEffect effect, int duration, int level) {
+    public static void addEventEffect(RegistryEntry<StatusEffect> effect, int duration, int level) {
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             int time = duration;
+
             @Override
             public void run() {
                 MinecraftClient client = MinecraftClient.getInstance();
@@ -163,15 +167,17 @@ public class DonationEvent {
                     timer.cancel();
                 } else {
                     if (client.getNetworkHandler() != null
-                            && client.getNetworkHandler().getConnection().getDisconnectReason() != null
-                            && client.getNetworkHandler().getConnection().getDisconnectReason().equals(Text.of("Вы были забанены на этом сервере"))) {
+                            && client.getNetworkHandler().getConnection() != null
+                            && client.getNetworkHandler().getConnection().disconnectionInfo != null
+                            && client.getNetworkHandler().getConnection().disconnectionInfo.reason() != null
+                            && client.getNetworkHandler().getConnection().disconnectionInfo.reason().equals(Text.of("Вы были забанены на этом сервере"))) {
                         timer.cancel();
                     }
                     if (client.player != null) {
-                        if(level == 0){
-                            client.player.addStatusEffect(new StatusEffectInstance(effect, time * 20));
+                        if (level == 0) {
+                            client.player.activeStatusEffects.put(effect, new StatusEffectInstance(effect, time * 20));
                         } else {
-                            client.player.addStatusEffect(new StatusEffectInstance(effect, time * 20, level));
+                            client.player.activeStatusEffects.put(effect, new StatusEffectInstance(effect, time * 20, level));
                         }
                     }
                     time--;
