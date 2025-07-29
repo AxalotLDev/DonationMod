@@ -13,8 +13,7 @@ public class KeyboardInputMixin extends Input {
     @Inject(method = "tick", at = @At("TAIL"))
     private void applyEvents(CallbackInfo ci) {
         if (Values.invertedControl) {
-            this.movementSideways = -movementSideways;
-            this.movementForward = -movementForward;
+            this.movementVector = movementVector.negate();
         }
     }
 }
