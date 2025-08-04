@@ -12,8 +12,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class NoBowEvent extends Event {
-    public NoBowEvent(String name, int duration) {
-        super(name, duration);
+    public NoBowEvent(String name, int duration, float price) {
+        super(name, duration, price);
     }
 
     @Override

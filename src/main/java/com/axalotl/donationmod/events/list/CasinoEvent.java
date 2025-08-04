@@ -16,9 +16,10 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class CasinoEvent extends Event {
-    public CasinoEvent(String name, int duration) {
-        super(name, duration);
+    public CasinoEvent(String name, int duration, float price) {
+        super(name, duration, price);
     }
+
     @Override
     public void execute(DonationAlertsEvent donationAlertsEvent) {
         if (MinecraftClient.getInstance().player == null) {
@@ -43,16 +44,18 @@ public class CasinoEvent extends Event {
             final List<BlockState> states = new ArrayList<>(Arrays.asList(Blocks.IRON_BLOCK.getDefaultState(), Blocks.GOLD_BLOCK.getDefaultState(), Blocks.DIAMOND_BLOCK.getDefaultState(), Blocks.NETHERITE_BLOCK.getDefaultState()));
             int count = 5;
             int[] slots;
+
             public void run() {
-                if(count<=0){
+                if (count <= 0) {
                     map.forEach((blockPos, blockState) -> MinecraftClient.getInstance().world.setBlockState(blockPos, blockState));
-                    if(slots[0] == 4 && slots[1] == 4 && slots[2] == 4){
+                    if (slots[0] == 4 && slots[1] == 4 && slots[2] == 4) {
                         Timer win = new Timer();
                         win.schedule(new TimerTask() {
                             int win_count = 3;
+
                             @Override
                             public void run() {
-                                if(win_count<=0){
+                                if (win_count <= 0) {
                                     MinecraftClient.getInstance().inGameHud.setTitle(Text.of("§a" + donationAlertsEvent.UserName));
                                     win.cancel();
                                 } else {
@@ -61,12 +64,12 @@ public class CasinoEvent extends Event {
                                 }
                             }
                         }, 0, 1000);
-                        MinecraftClient.getInstance().player.playSound(SoundEvents.ENTITY_ENDER_DRAGON_DEATH, 1F,1F);
-                        MinecraftClient.getInstance().player.sendMessage(Text.of("§7[§bКазино§7] "+ "§rПобедитель:§a " + donationAlertsEvent.UserName), false);
+                        MinecraftClient.getInstance().player.playSound(SoundEvents.ENTITY_ENDER_DRAGON_DEATH, 1F, 1F);
+                        MinecraftClient.getInstance().player.sendMessage(Text.of("§7[§bКазино§7] " + "§rПобедитель:§a " + donationAlertsEvent.UserName), false);
                     }
                     casino_timer.cancel();
                 } else {
-                    if(MinecraftClient.getInstance().getCameraEntity() != null){
+                    if (MinecraftClient.getInstance().getCameraEntity() != null) {
                         double x = MinecraftClient.getInstance().player.getX();
                         double y = MinecraftClient.getInstance().player.getY();
                         double z = MinecraftClient.getInstance().player.getZ();
@@ -78,15 +81,15 @@ public class CasinoEvent extends Event {
                     for (int i = 0; i < slots.length; i++) {
                         slots[i] = random.nextInt(4) + 1;
                     }
-                    BlockState firstSlot = states.get(slots[0]-1);
-                    BlockState secondSlot = states.get(slots[1]-1);
-                    BlockState thirdSlot = states.get(slots[2]-1);
+                    BlockState firstSlot = states.get(slots[0] - 1);
+                    BlockState secondSlot = states.get(slots[1] - 1);
+                    BlockState thirdSlot = states.get(slots[2] - 1);
 
                     MinecraftClient.getInstance().world.setBlockState(firstBlock, firstSlot);
-                    MinecraftClient.getInstance().world.setBlockState(firstBlock.add(-1,0,0), secondSlot);
-                    MinecraftClient.getInstance().world.setBlockState(firstBlock.add(-2,0,0), thirdSlot);
+                    MinecraftClient.getInstance().world.setBlockState(firstBlock.add(-1, 0, 0), secondSlot);
+                    MinecraftClient.getInstance().world.setBlockState(firstBlock.add(-2, 0, 0), thirdSlot);
 
-                    MinecraftClient.getInstance().player.playSound(SoundEvents.BLOCK_NOTE_BLOCK_BIT.value(), 1F,1F);
+                    MinecraftClient.getInstance().player.playSound(SoundEvents.BLOCK_NOTE_BLOCK_BIT.value(), 1F, 1F);
                     count--;
                 }
             }

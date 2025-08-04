@@ -12,13 +12,13 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class CinematicCameraEvent extends Event {
-    public CinematicCameraEvent(String name, int duration) {
-        super(name, duration);
+    public CinematicCameraEvent(String name, int duration, float price) {
+        super(name, duration, price);
     }
 
     @Override
     public void execute(DonationAlertsEvent donationAlertsEvent) {
-        if(MinecraftClient.getInstance().player == null) {
+        if (MinecraftClient.getInstance().player == null) {
             DonationEvent.activeEvents.removeIf(event -> event instanceof CinematicCameraEvent);
             return;
         }
@@ -27,7 +27,7 @@ public class CinematicCameraEvent extends Event {
         Values.forceFov = true;
         Values.fov = 60;
         DonationEvent.addDonationText(null, I18n.translate("effect.donation_mod.cinematic_camera"));
-        DonationEvent.addEventEffect(EventEffects.CINEMATIC_CAMERA,getDuration(), 0);
+        DonationEvent.addEventEffect(EventEffects.CINEMATIC_CAMERA, getDuration(), 0);
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override

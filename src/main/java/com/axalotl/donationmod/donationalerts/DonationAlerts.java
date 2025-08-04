@@ -13,46 +13,46 @@ import java.util.Objects;
 
 public class DonationAlerts {
     private final Socket sock;
+    private boolean allowNext = false;
 
     public DonationAlerts(String server) throws URISyntaxException {
         IO.Options options = new IO.Options();
-        options.transports = new String[]{"websocket"}; // обязательно, иначе может пытаться использовать polling
+        options.transports = new String[]{"websocket"};
         options.reconnection = true;
         options.forceNew = true;
 
-        URI uri = new URI(server); // например: "https://socket.donationalerts.ru:443"
+        URI uri = new URI(server);
         sock = IO.socket(uri, options);
 
-        // Подключение
         sock.on(Socket.EVENT_CONNECT, args -> {
             System.out.println("✅ Socket connected");
             DonationMod.DonationAlertsInformation(I18n.translate("text.donation_mod.message.connect"));
         });
 
-        // Отключение
         sock.on(Socket.EVENT_DISCONNECT, args -> {
             System.out.println("🔌 Socket disconnected");
             DonationMod.DonationAlertsInformation(I18n.translate("text.donation_mod.message.disconnect"));
         });
 
-        // Ошибка подключения
         sock.on(Socket.EVENT_CONNECT_ERROR, args -> {
             System.err.println("❌ Socket connect error: " + (args.length > 0 ? args[0] : "Unknown"));
             DonationMod.DonationAlertsInformation(I18n.translate("text.donation_mod.message.error"));
         });
 
-        // Ошибка соединения (дополнительно)
         sock.on(Socket.EVENT_CONNECT_ERROR, args -> System.err.println("⚠️ Socket error: " + (args.length > 0 ? args[0] : "Unknown")));
 
         // Обработка доната
         sock.on("donation", args -> {
-            if (args.length > 0 && args[0] instanceof String) {
-                try {
-                    DonationMod.AddDonation(
-                            Objects.requireNonNull(DonationAlertsEvent.getDonationAlertsEvent((String) args[0]))
-                    );
-                } catch (Exception e) {
-                    e.printStackTrace();
+            allowNext = !allowNext;
+            if (allowNext) {
+                if (args.length > 0 && args[0] instanceof String) {
+                    try {
+                        DonationMod.AddDonation(
+                                Objects.requireNonNull(DonationAlertsEvent.getDonationAlertsEvent((String) args[0]))
+                        );
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });

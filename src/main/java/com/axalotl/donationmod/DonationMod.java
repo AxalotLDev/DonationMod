@@ -53,8 +53,7 @@ public class DonationMod implements ModInitializer {
 
     public static void AddDonation(DonationAlertsEvent event) {
         if (event.Type == AlertType.Donate) {
-            System.out.println("work");
-            DonationEvent.launchRandomEvent(event);
+            DonationEvent.runEvent(event);
         }
     }
 

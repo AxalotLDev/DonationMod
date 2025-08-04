@@ -12,8 +12,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class StopMoveEvent extends Event {
-    public StopMoveEvent(String name, int duration) {
-        super(name, duration);
+    public StopMoveEvent(String name, int duration, float price) {
+        super(name, duration, price);
     }
 
     @Override

@@ -7,8 +7,8 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.resource.language.I18n;
 
 public class DropItemEvent extends Event {
-    public DropItemEvent(String name, int duration) {
-        super(name, duration);
+    public DropItemEvent(String name, int duration, float price) {
+        super(name, duration, price);
     }
 
     @Override

@@ -10,8 +10,8 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.particle.ParticleTypes;
 
 public class ScarryEvent extends Event {
-    public ScarryEvent(String name, int duration) {
-        super(name, duration);
+    public ScarryEvent(String name, int duration, float price) {
+        super(name, duration, price);
     }
 
     @Override

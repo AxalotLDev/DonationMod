@@ -12,8 +12,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class RotateScreen extends Event {
-    public RotateScreen(String name, int duration) {
-        super(name, duration);
+    public RotateScreen(String name, int duration, float price) {
+        super(name, duration, price);
     }
 
     @Override

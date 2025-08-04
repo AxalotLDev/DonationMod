@@ -22,8 +22,8 @@ public class EffectEvent extends Event {
             StatusEffects.MINING_FATIGUE
     ));
 
-    public EffectEvent(String name, int duration) {
-        super(name, duration);
+    public EffectEvent(String name, int duration, float price) {
+        super(name, duration, price);
     }
 
     @Override

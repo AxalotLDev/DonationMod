@@ -12,19 +12,19 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class NoMob extends Event {
-    public NoMob(String name, int duration) {
-        super(name, duration);
+    public NoMob(String name, int duration, float price) {
+        super(name, duration, price);
     }
 
     @Override
     public void execute(DonationAlertsEvent donationAlertsEvent) {
-        if(MinecraftClient.getInstance().player == null) {
+        if (MinecraftClient.getInstance().player == null) {
             DonationEvent.activeEvents.removeIf(event -> event instanceof NoMob);
             return;
         }
         Values.noMob = true;
         DonationEvent.addDonationText(null, I18n.translate("effect.donation_mod.no_mob"));
-        DonationEvent.addEventEffect(EventEffects.NO_MOB,getDuration(), 0);
+        DonationEvent.addEventEffect(EventEffects.NO_MOB, getDuration(), 0);
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override

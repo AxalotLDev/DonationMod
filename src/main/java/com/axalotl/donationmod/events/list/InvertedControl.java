@@ -12,19 +12,19 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class InvertedControl extends Event {
-    public InvertedControl(String name, int duration) {
-        super(name, duration);
+    public InvertedControl(String name, int duration, float price) {
+        super(name, duration, price);
     }
 
     @Override
     public void execute(DonationAlertsEvent donationAlertsEvent) {
-        if(MinecraftClient.getInstance().player == null) {
+        if (MinecraftClient.getInstance().player == null) {
             DonationEvent.activeEvents.removeIf(event -> event instanceof InvertedControl);
             return;
         }
         Values.invertedControl = true;
-        DonationEvent.addDonationText(null, I18n.translate( "effect.donation_mod.inverted_control"));
-        DonationEvent.addEventEffect(EventEffects.INVERTED_CONTROL,getDuration(), 0);
+        DonationEvent.addDonationText(null, I18n.translate("effect.donation_mod.inverted_control"));
+        DonationEvent.addEventEffect(EventEffects.INVERTED_CONTROL, getDuration(), 0);
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override

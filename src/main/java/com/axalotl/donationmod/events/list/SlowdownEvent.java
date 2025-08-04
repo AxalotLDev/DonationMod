@@ -15,8 +15,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class SlowdownEvent extends Event {
-    public SlowdownEvent(String name, int duration) {
-        super(name, duration);
+    public SlowdownEvent(String name, int duration, float price) {
+        super(name, duration, price);
     }
 
     @Override

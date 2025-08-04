@@ -12,19 +12,19 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class CancelDamage extends Event {
-    public CancelDamage(String name, int duration) {
-        super(name, duration);
+    public CancelDamage(String name, int duration, float price) {
+        super(name, duration, price);
     }
 
     @Override
     public void execute(DonationAlertsEvent donationAlertsEvent) {
-        if(MinecraftClient.getInstance().player == null) {
+        if (MinecraftClient.getInstance().player == null) {
             DonationEvent.activeEvents.removeIf(event -> event instanceof CancelDamage);
             return;
         }
         Values.cancelDamage = true;
-        DonationEvent.addDonationText(null, I18n.translate( "effect.donation_mod.cancel_damage"));
-        DonationEvent.addEventEffect(EventEffects.CANCEL_DAMAGE,getDuration(), 0);
+        DonationEvent.addDonationText(null, I18n.translate("effect.donation_mod.cancel_damage"));
+        DonationEvent.addEventEffect(EventEffects.CANCEL_DAMAGE, getDuration(), 0);
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
